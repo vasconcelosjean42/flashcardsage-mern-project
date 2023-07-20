@@ -15,6 +15,8 @@ function App() {
     axios.get('http://localhost:5001/decks')
     .then(({data}) => {
       setDeck(data)
+    }).catch(e => {
+      console.log(e)
     })
   }
 
@@ -25,7 +27,7 @@ function App() {
 
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    await axios.post('http://localhost:5000/decks',{
+    await axios.post('http://localhost:5001/decks',{
       title: title
     })
     setTitle("")
@@ -37,7 +39,8 @@ function App() {
         <label htmlFor='deck-title'>
           Deck Title
         </label>
-        <input id='deck-title' 
+        <input
+          id='deck-title' 
           value={title}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setTitle(e.target.value)
