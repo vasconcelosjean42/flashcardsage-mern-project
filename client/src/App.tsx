@@ -1,23 +1,34 @@
-import { useEffect, useState } from 'react'
+import { Key, useEffect, useState } from 'react'
 import './App.css'
 import axios from 'axios'
 
+export interface deckType {
+  title: String
+  id: String
+}
 
 function App() {
   const [title, setTitle] = useState('')
-  useEffect(() => {
-    console.log("title: " + title)
-  })
-  
-  function handleCreateDeck(e: React.FormEvent) {
-    e.preventDefault()
-    axios.post('http://localhost:5000/decks',{
-      title: title
-    }).then(() => {
-      console.log('foi')
-    }).catch(e => {
-      console.log(e)
+  const [deck, setDeck] = useState<deckType[]>([])
+
+  function fetchData() {
+    axios.get('http://localhost:5001/decks')
+    .then(({data}) => {
+      setDeck(data)
     })
+  }
+
+  useEffect(() => {
+    console.log('useEffect')
+    fetchData()
+  }, [])
+
+  async function handleCreateDeck(e: React.FormEvent) {
+    e.preventDefault()
+    await axios.post('http://localhost:5000/decks',{
+      title: title
+    })
+    setTitle("")
   }
   
   return (
@@ -34,6 +45,15 @@ function App() {
         />
         <button>Create Deck</button>
       </form>
+      <ul>
+          {deck.map(d => {
+            return(
+              <li style ={{listStyleType:'none' }}key={d.id as Key}>
+                {d.title}
+              </li>
+            )
+          })}
+      </ul>
     </div>
   )
 }
