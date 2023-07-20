@@ -33,30 +33,6 @@ body {
   min-height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -84,15 +60,39 @@ li{
   border-radius: 0.5rem;
   background-color: grey;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
   font-weight: 300;
   margin: 0.4rem;
   color: white;
+  flex-direction: column;
 }
 
-li:hover{
-  background-color: darkgrey;
+li p{
+  flex: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-block-start: 0rem;
+  margin-block-end: 0rem;
+}
+
+li button{
+  width: 100%;
+  height: 2rem;
+  background-color: #DC2323;
+  color: white;
+  text-decoration: none;
+  border: 0;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+
+li button i{
+  font-size: 1.125rem;
+}
+
+li button:hover li{
+  background-color: #C61F1F
 }
 
 form{

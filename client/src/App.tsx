@@ -27,12 +27,21 @@ function App() {
 
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    await axios.post('http://localhost:5001/decks',{
+    const newDeck = {
       title: title
-    })
+    }
+    const deckUpdated = await axios.post('http://localhost:5001/decks',newDeck)
     setTitle("")
+    setDeck(deck.concat(deckUpdated.data))
   }
-  
+
+  async function handleDeleteDeck(d:deckType){
+    console.log(d)
+    await axios.delete(`http://localhost:5001/decks/${d.id}`)
+    //important step(star): delete one item
+    setDeck(deck.filter(dc => dc.id !== d.id))
+  }
+
   return (
     <div>
       <form onSubmit={handleCreateDeck}>
@@ -52,7 +61,10 @@ function App() {
           {deck.map(d => {
             return(
               <li style ={{listStyleType:'none' }}key={d.id as Key}>
-                {d.title}
+                <p>{d.title}</p>
+                <button onClick={() => handleDeleteDeck(d)}>
+                    <i className="uil uil-trash-alt"></i>
+                </button>
               </li>
             )
           })}
