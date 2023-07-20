@@ -16,7 +16,6 @@ app.get('/', (req: Request, res: Response) => {
 
 app.post('/decks', async (req: Request, res: Response) => {
   const body = req.body
-  
   console.log(req.body)
   
   const newDeck = new Deck({
