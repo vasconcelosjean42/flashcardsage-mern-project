@@ -9,6 +9,14 @@ decksRouter.get('/', async (req: Request, res: Response) => {
   }
 )
 
+decksRouter.get('/:deckId/cards', async (req: Request, res: Response) => {
+    const {deckId} = req.params
+    const deck = await Deck.findById(deckId)
+    if(!deck) return res.status(404).json({"error": "deck do not exists"})
+    res.json(deck.cards)
+  }
+)
+
 decksRouter.post('/', async (req: Request, res: Response) => {
     const body = req.body
     console.log(req.body)
@@ -34,8 +42,6 @@ decksRouter.post('/:deckId/cards', async (req: Request, res: Response) => {
     }catch{
         res.status(400).json({"error": "invalid id"})
     }
-    
-    
     }
 )
 
