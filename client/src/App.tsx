@@ -1,23 +1,15 @@
 import { Key, useEffect, useState } from 'react'
 import './App.css'
-import axios from 'axios'
-
-export interface deckType {
-  title: String
-  id: String
-}
+import { Link } from 'react-router-dom'
+import { createDeck, deckType, deleteDeck, getDecks } from './api/decks'
 
 function App() {
   const [title, setTitle] = useState('')
   const [deck, setDeck] = useState<deckType[]>([])
 
-  function fetchData() {
-    axios.get('http://localhost:5001/decks')
-    .then(({data}) => {
-      setDeck(data)
-    }).catch(e => {
-      console.log(e)
-    })
+  async function fetchData() {
+    const data = await getDecks()
+    setDeck(data)
   }
 
   useEffect(() => {
@@ -27,17 +19,13 @@ function App() {
 
   async function handleCreateDeck(e: React.FormEvent) {
     e.preventDefault()
-    const newDeck = {
-      title: title
-    }
-    const deckUpdated = await axios.post('http://localhost:5001/decks',newDeck)
+    const deckUpdated = await createDeck(title)
     setTitle("")
     setDeck(deck.concat(deckUpdated.data))
   }
 
   async function handleDeleteDeck(d:deckType){
-    console.log(d)
-    await axios.delete(`http://localhost:5001/decks/${d.id}`)
+    await deleteDeck(d.id)
     //important step(star): delete one item
     setDeck(deck.filter(dc => dc.id !== d.id))
   }
@@ -61,7 +49,9 @@ function App() {
           {deck.map(d => {
             return(
               <li style ={{listStyleType:'none' }}key={d.id as Key}>
-                <p>{d.title}</p>
+                <Link to={`decks/${d.id}`}>
+                  <p>{d.title}</p>
+                </Link>
                 <button onClick={() => handleDeleteDeck(d)}>
                     <i className="uil uil-trash-alt"></i>
                 </button>
