@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 export interface deckType {
-    title: String
-    cards: String[]
-    id: String
+    title: string
+    cards: string[]
+    id: string
 }
 
 const baseUrl = 'http://localhost:5001/decks'
@@ -13,7 +13,7 @@ const getDecks = async (): Promise<deckType[]> => {
     return data
 }
 
-const createDeck = async (title: String) => {
+const createDeck = async (title: string) => {
     const newDeck = {
         title: title
       }
@@ -21,7 +21,7 @@ const createDeck = async (title: String) => {
     return deckUpdated
 }
 
-const deleteDeck = async (id: String) => {
+const deleteDeck = async (id: string) => {
     await axios.delete(`${baseUrl}/${id}`)
 }
 

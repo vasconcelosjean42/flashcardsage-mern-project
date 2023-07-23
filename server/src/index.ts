@@ -7,6 +7,7 @@ import cors from 'cors'
 
 import Deck from './models/Deck';
 import decksRouter from './controllers/decks';
+import cardsRouter from './controllers/cards';
 
 const PORT = 5001
 
@@ -19,6 +20,7 @@ app.get('/', (req: Request, res: Response) => {
 })
 
 app.use('/decks', decksRouter)
+app.use('/decks', cardsRouter)
 
 const db = mongoose.connect(process.env.MONGO_URL!).then(() => {
     console.log(`litening to the port ${PORT}`)

@@ -31,7 +31,8 @@ function App() {
   }
 
   return (
-    <div>
+    <div className='App'>
+      <h1>Your Decks</h1>
       <form onSubmit={handleCreateDeck}>
         <label htmlFor='deck-title'>
           Deck Title

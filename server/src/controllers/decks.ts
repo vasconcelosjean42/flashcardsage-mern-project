@@ -9,14 +9,6 @@ decksRouter.get('/', async (req: Request, res: Response) => {
   }
 )
 
-decksRouter.get('/:deckId/cards', async (req: Request, res: Response) => {
-    const {deckId} = req.params
-    const deck = await Deck.findById(deckId)
-    if(!deck) return res.status(404).json({"error": "deck do not exists"})
-    res.json(deck.cards)
-  }
-)
-
 decksRouter.post('/', async (req: Request, res: Response) => {
     const body = req.body
     console.log(req.body)
@@ -28,21 +20,6 @@ decksRouter.post('/', async (req: Request, res: Response) => {
     const createdDeck = await newDeck.save()
     res.json(createdDeck)
   }
-)
-
-decksRouter.post('/:deckId/cards', async (req: Request, res: Response) => {
-    const deckId = req.params.deckId;
-    try{
-        const deck = await Deck.findById(deckId)
-        const {text} = req.body
-        if(!deck) return res.status(404).json({"error": "deck do not exists"})
-        deck.cards.push(text);
-        await deck.save();
-        res.json(deck);
-    }catch{
-        res.status(400).json({"error": "invalid id"})
-    }
-    }
 )
 
 decksRouter.delete('/:id', async (req: Request, res: Response) => {
